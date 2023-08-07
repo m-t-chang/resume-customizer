@@ -3,7 +3,8 @@ import { useState } from "react";
 import styles from "./index.module.css";
 
 export default function Home() {
-  const [animalInput, setAnimalInput] = useState("");
+  const [resumeInput, setResumeInput] = useState("");
+  const [jobDescriptionInput, setJobDescriptionInput] = useState("");
   const [result, setResult] = useState();
 
   async function onSubmit(event) {
@@ -14,7 +15,7 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ animal: animalInput }),
+        body: JSON.stringify({ resume: resumeInput, jobDescription: jobDescriptionInput }),
       });
 
       const data = await response.json();
@@ -23,8 +24,9 @@ export default function Home() {
       }
 
       setResult(data.result);
-      setAnimalInput("");
-    } catch(error) {
+      console.log(data.result);
+      // optionally reset the inputs here
+    } catch (error) {
       // Consider implementing your own error handling logic here
       console.error(error);
       alert(error.message);
@@ -35,23 +37,38 @@ export default function Home() {
     <div>
       <Head>
         <title>OpenAI Quickstart</title>
-        <link rel="icon" href="/dog.png" />
+        {/* <link rel="icon" href="/dog.png" /> */}
       </Head>
 
       <main className={styles.main}>
-        <img src="/dog.png" className={styles.icon} />
-        <h3>Name my pet</h3>
+        {/* <img src="/dog.png" className={styles.icon} /> */}
+        <h3>Customize a resume for a job description</h3>
         <form onSubmit={onSubmit}>
-          <input
-            type="text"
-            name="animal"
-            placeholder="Enter an animal"
-            value={animalInput}
-            onChange={(e) => setAnimalInput(e.target.value)}
+          <label htmlFor="resume">Resume</label>
+          <textarea
+            id="resume"
+            name="resume"
+            value={resumeInput}
+            onChange={(e) => setResumeInput(e.target.value)}
           />
-          <input type="submit" value="Generate names" />
+          <label htmlFor="job-description">Job Description</label>
+          <textarea
+            id="job-description"
+            name="job-description"
+            value={jobDescriptionInput}
+            onChange={(e) => setJobDescriptionInput(e.target.value)}
+          />
+          <input type="submit" value="Generate" />
         </form>
-        <div className={styles.result}>{result}</div>
+
+        {/* <div className={styles.result}>{result}</div> */}
+
+        <textarea
+            id="ai-result"
+            name="ai-result"
+            value={result}
+            readOnly={true}
+          />
       </main>
     </div>
   );
