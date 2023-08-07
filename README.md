@@ -13,7 +13,7 @@ The app is based on the OpenAI API [quickstart tutorial](https://platform.openai
 3. Navigate into the project directory
 
    ```bash
-   $ cd openai-quickstart-node
+   $ cd resume-customizer
    ```
 
 4. Install the requirements
